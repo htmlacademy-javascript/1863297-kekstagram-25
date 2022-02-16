@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Александр Метелица](https://up.htmlacademy.ru/javascript/25/user/1863297).
-* Наставник: [Анастасия Ничипорук](https://htmlacademy.ru/profile/id612797).
+* Наставник: [Анастасия Ничипорчук](https://htmlacademy.ru/profile/id612797).
 
 ---
 
