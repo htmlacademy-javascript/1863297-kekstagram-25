@@ -4,8 +4,6 @@ function smth(min,max) {
 }
 smth(0, 20);
 
-
-
 function checkLegth() {
   const str = true;
   const maxLegth = 100;
@@ -15,3 +13,4 @@ function checkLegth() {
   }
   return str
 }
+checkLegth();
