@@ -1,8 +1,14 @@
 function randomNumber(min,max) {
-  const number = Math.random() * (max - min) + min;
-  return number;
+  if (max <= min) {
+    throw('Ошибка');
+  }
+  else if (min <= 0 && max <= 0) {
+    throw('Ошибка');
+  }
+  return Math.round(Math.random() * (max - min) + min);
 }
-randomNumber(0, 20);
+randomNumber(1, 30);
+
 
 function checkLegth(str, maxLegth) {
   let check = true;
