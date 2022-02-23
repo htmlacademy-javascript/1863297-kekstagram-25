@@ -1,16 +1,15 @@
-function smth(min,max) {
+function randomNumber(min,max) {
   const number = Math.random() * (max - min) + min;
   return number;
 }
-smth(0, 20);
+randomNumber(0, 20);
 
-function checkLegth() {
-  const str = true;
-  const maxLegth = 100;
+function checkLegth(maxLegth) {
+  let str = true;
 
   if (maxLegth >= 140) {
-    str = false
+    str = false;
   }
-  return str
+  return str;
 }
-checkLegth();
+checkLegth(100);
