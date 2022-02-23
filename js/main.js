@@ -4,12 +4,11 @@ function randomNumber(min,max) {
 }
 randomNumber(0, 20);
 
-function checkLegth(maxLegth) {
-  let str = true;
-
-  if (maxLegth >= 140) {
-    str = false;
+function checkLegth(str, maxLegth) {
+  let check = true;
+  if (str.length > maxLegth) {
+    check = false;
   }
-  return str;
+  return check;
 }
-checkLegth(100);
+checkLegth(100, 140);
