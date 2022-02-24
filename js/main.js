@@ -2,13 +2,12 @@ function randomNumber(min,max) {
   if (max <= min) {
     throw('Ошибка');
   }
-  else if (min <= 0 && max <= 0) {
+  if (min <= 0 || max <= 0) {
     throw('Ошибка');
   }
   return Math.round(Math.random() * (max - min) + min);
 }
 randomNumber(1, 30);
-
 
 function checkLegth(str, maxLegth) {
   let check = true;
