@@ -10,10 +10,6 @@ function randomNumber(min,max) {
 randomNumber(1, 30);
 
 function checkLegth(str, maxLegth) {
-  let check = true;
-  if (str.length > maxLegth) {
-    check = false;
-  }
-  return check;
+  return str.length > maxLegth;
 }
 checkLegth(100, 140);
