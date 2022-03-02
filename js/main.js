@@ -91,11 +91,24 @@ const getRandomPositiveInteger = (a, b) => {
   return Math.floor(result);
 };
 
+const createComments = () => ({
+  id: randomNumber(1, 100),
+  avatar: `photos/${randomNumber(1, 6)}.svg.`,
+  message: MESSAGE[getRandomPositiveInteger(0, MESSAGE.length - 1)],
+  name: NAMES[getRandomPositiveInteger(0, NAMES.length - 1)],
+});
+
+const COMMENTS = [];
+for (let i = 1; i <= 25; i++) {
+  COMMENTS.push(createComments(i));
+}
+
 const createPosts = (id) => ({
   id: id,
   url: `photos/${id}.jpg`,
   description: DESCRIPTION[getRandomPositiveInteger(0, DESCRIPTION.length - 1)],
   likes: randomNumber(15, 200),
+  comments: COMMENTS[getRandomPositiveInteger(0, COMMENTS.length - 1)]
 });
 
 const URL = [];
@@ -104,10 +117,3 @@ for (let i = 1; i <= 25; i++) {
 }
 
 console.log(URL);
-
-const createComments = () => ({
-  id: randomNumber(1, 100),
-  avatar: `photos/${randomNumber(1, 6)}.svg.`,
-  message: MESSAGE[getRandomPositiveInteger(0, MESSAGE.length - 1)],
-  name: NAMES[getRandomPositiveInteger(0, NAMES.length - 1)],
-});
