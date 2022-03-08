@@ -1,4 +1,4 @@
-function randomNumber(min,max) {
+function getRandomNumber(min,max) {
   if (max <= min) {
     throw('Ошибка');
   }
@@ -41,7 +41,7 @@ comments, массив объектов — список комментарие�
 Имена авторов также должны быть случайными. Набор имён для комментаторов составьте сами. Подставляйте случайное имя в поле name.
 */
 
-const DESCRIPTION = [
+const DESCRIPTIONS = [
   'В Милане',
   'На Кубе',
   'No war',
@@ -72,7 +72,7 @@ const NAMES = [
   'Алина',
 ];
 
-const MESSAGE = [
+const MESSAGES = [
   'Всё отлично!',
   'В целом всё неплохо.',
   'Но не всё.',
@@ -92,28 +92,33 @@ const getRandomPositiveInteger = (a, b) => {
 };
 
 const createComments = () => ({
-  id: randomNumber(1, 100),
-  avatar: `photos/${randomNumber(1, 6)}.svg.`,
-  message: MESSAGE[getRandomPositiveInteger(0, MESSAGE.length - 1)],
+  id: getRandomNumber(1, 100),
+  avatar: `photos/${getRandomNumber(1, 6)}.svg.`,
+  message: MESSAGES[getRandomPositiveInteger(0, MESSAGES.length - 1)],
   name: NAMES[getRandomPositiveInteger(0, NAMES.length - 1)],
 });
 
-const COMMENTS = [];
-for (let i = 1; i <= 25; i++) {
-  COMMENTS.push(createComments(i));
+const comments = [];
+const QUANTITYCOMMENTS = 10;
+for (let i = 1; i <= QUANTITYCOMMENTS; i++) {
+  comments.push(createComments());
 }
 
 const createPosts = (id) => ({
   id: id,
   url: `photos/${id}.jpg`,
-  description: DESCRIPTION[getRandomPositiveInteger(0, DESCRIPTION.length - 1)],
-  likes: randomNumber(15, 200),
-  comments: COMMENTS[getRandomPositiveInteger(0, COMMENTS.length - 1)]
+  description: DESCRIPTIONS[getRandomPositiveInteger(0, DESCRIPTIONS.length - 1)],
+  likes: getRandomNumber(15, 200),
+  comments: comments[getRandomPositiveInteger(0, comments.length - 1)]
 });
 
-const URL = [];
-for (let i = 1; i <= 25; i++) {
-  URL.push(createPosts(i));
+const posts = [];
+const QUANTITYPOSTS = 25;
+for (let i = 1; i <= QUANTITYPOSTS; i++) {
+  posts.push(createPosts(i));
 }
 
-console.log(URL);
+function postsRandElement(posts) {
+  const rand = Math.floor(Math.random() * posts.length);
+  return posts[rand];
+}
