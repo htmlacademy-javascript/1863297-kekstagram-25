@@ -1,16 +1,7 @@
-function getRandomNumber(min,max) {
-  if (max <= min) {
-    throw('Ошибка');
-  }
-  if (min <= 0 || max <= 0) {
-    throw('Ошибка');
-  }
-  return Math.round(Math.random() * (max - min) + min);
-}
-
-function checkLegth(str, maxLegth) {
-  return str.length > maxLegth;
-}
+const maxNumberComments = 100;
+const maxNumberLikes = 200;
+const minNumberLikes = 15;
+const maxNumberAvatar = 6;
 
 const DESCRIPTIONS = [
   'В Милане',
@@ -55,6 +46,32 @@ const MESSAGES = [
   'Как можно было поймать такой неудачный момент?!',
 ];
 
+const comments = [];
+const AMTCOMMENTS = 10;
+for (let i = 0; i < AMTCOMMENTS; i++) {
+  comments.push(createComments());
+}
+
+const posts = [];
+const AMTPOSTS = 25;
+for (let i = 0; i < AMTPOSTS; i++) {
+  posts.push(createPosts(i));
+}
+
+function getRandomNumber(min,max) {
+  if (max <= min) {
+    throw('Ошибка');
+  }
+  if (min <= 0 || max <= 0) {
+    throw('Ошибка');
+  }
+  return Math.round(Math.random() * (max - min) + min);
+}
+
+function checkLegth (str, maxLegth) {
+  return str.length > maxLegth;
+}
+
 const getRandomPositiveInteger = (a, b) => {
   const lower = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
   const upper = Math.floor(Math.max(Math.abs(a), Math.abs(b)));
@@ -63,61 +80,21 @@ const getRandomPositiveInteger = (a, b) => {
 };
 
 const createComments = () => ({
-  id: getRandomNumber(1, 100),
-  avatar: `photos/${getRandomNumber(1, 6)}.svg.`,
+  id: getRandomNumber(1, maxNumberComments),
+  avatar: `photos/${getRandomNumber(1, maxNumberAvatar)}.svg.`,
   message: MESSAGES[getRandomPositiveInteger(0, MESSAGES.length - 1)],
   name: NAMES[getRandomPositiveInteger(0, NAMES.length - 1)],
 });
-
-const comments = [];
-const AMTCOMMENTS = 10;
-for (let i = 1; i <= AMTCOMMENTS; i++) {
-  comments.push(createComments());
-}
 
 const createPosts = (id) => ({
   id: id,
   url: `photos/${id}.jpg`,
   description: DESCRIPTIONS[getRandomPositiveInteger(0, DESCRIPTIONS.length - 1)],
-  likes: getRandomNumber(15, 200),
+  likes: getRandomNumber(minNumberLikes, maxNumberLikes),
   comments: comments,
 });
 
-const posts = [];
-const AMTPOSTS = 25;
-for (let i = 1; i <= AMTPOSTS; i++) {
-  posts.push(createPosts(i));
-}
-
-function postsRandElement() {
+const postsRandElement = () => {
   const rand = Math.floor(Math.random() * posts.length);
   return posts[rand];
-}
-
-/*
-Структура каждого объекта должна быть следующей:
-
-id, число — идентификатор описания. Это число от 1 до 25. Идентификаторы не должны повторяться.
-
-url, строка — адрес картинки вида photos/{{i}}.jpg, где {{i}} — это число от 1 до 25. Адреса картинок не должны повторяться.
-
-description, строка — описание фотографии. Описание придумайте самостоятельно.
-
-likes, число — количество лайков, поставленных фотографии. Случайное число от 15 до 200.
-
-comments, массив объектов — список комментариев, оставленных другими пользователями к этой фотографии. Количество комментариев к каждой фотографии вы определяете на своё усмотрение. Все комментарии генерируются случайным образом. Пример описания объекта с комментарием:
-
-{
-  id: 135,
-  avatar: 'img/avatar-6.svg',
-  message: 'В целом всё неплохо. Но не всё.',
-  name: 'Артём',
-}
-У каждого комментария есть идентификатор — id — случайное число. Идентификаторы не должны повторяться.
-
-Поле avatar — это строка, значение которой формируется по правилу img/avatar-{{случайное число от 1 до 6}}.svg. Аватарки подготовлены в директории img.
-
-Для формирования текста комментария — message — вам необходимо взять одно или два случайных предложения из представленных ниже:
-
-Имена авторов также должны быть случайными. Набор имён для комментаторов составьте сами. Подставляйте случайное имя в поле name.
-*/
+};
