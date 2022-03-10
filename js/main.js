@@ -47,16 +47,7 @@ const MESSAGES = [
 ];
 
 const comments = [];
-const AMTCOMMENTS = 10;
-for (let i = 0; i < AMTCOMMENTS; i++) {
-  comments.push(createComments());
-}
-
 const posts = [];
-const AMTPOSTS = 25;
-for (let i = 0; i < AMTPOSTS; i++) {
-  posts.push(createPosts(i));
-}
 
 function getRandomNumber(min,max) {
   if (max <= min) {
@@ -98,3 +89,13 @@ const postsRandElement = () => {
   const rand = Math.floor(Math.random() * posts.length);
   return posts[rand];
 };
+
+const AMTCOMMENTS = 10;
+for (let i = 0; i < AMTCOMMENTS; i++) {
+  comments.push(createComments());
+}
+
+const AMTPOSTS = 25;
+for (let i = 0; i < AMTPOSTS; i++) {
+  posts.push(createPosts(i));
+}
