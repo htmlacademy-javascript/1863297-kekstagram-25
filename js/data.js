@@ -7,9 +7,6 @@ const MAXNUMBERAVATAR = 6;
 const AMTCOMMENTS = 10;
 const AMTPOSTS = 25;
 
-const comments = [];
-const posts = [];
-
 const DESCRIPTIONS = [
   'В Милане',
   'На Кубе',
@@ -53,6 +50,9 @@ const MESSAGES = [
   'Как можно было поймать такой неудачный момент?!',
 ];
 
+const comments = [];
+const posts = [];
+
 const createComments = () => ({
   id: getRandomNumber(1, MAXNUMBERCOMMENTS),
   avatar: `photos/${getRandomNumber(1, MAXNUMBERAVATAR)}.svg.`,
@@ -78,7 +78,9 @@ for (let i = 0; i < AMTCOMMENTS; i++) {
 }
 
 for (let i = 0; i < AMTPOSTS; i++) {
-  posts.push(createPosts(i));
+  posts.push(createPosts(i+1));
 }
 
-export {postsRandElement};
+export {createPosts};
+export {posts};
+
