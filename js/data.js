@@ -83,4 +83,3 @@ for (let i = 0; i < AMTPOSTS; i++) {
 
 export {createPosts};
 export {posts};
-
