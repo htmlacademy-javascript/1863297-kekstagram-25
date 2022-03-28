@@ -1,5 +1,5 @@
 import {posts} from './data.js';
-import {bigPost} from './postpreview.js';
+import {openBigPost} from './postpreview.js';
 
 const postTemplate = document.querySelector('#picture')
   .content.querySelector('.picture');
@@ -12,7 +12,7 @@ posts.forEach ((post) => {
   postElement.querySelector('.picture__likes').textContent = post.likes;
   postElement.querySelector('.picture__comments').textContent = post.comments.length;
   postListFragment.appendChild(postElement);
-  postElement.addEventListener('click', () => bigPost(post));
+  postElement.addEventListener('click', () => openBigPost(post));
 });
 
 postListElement.appendChild(postListFragment);
