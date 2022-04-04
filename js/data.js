@@ -55,7 +55,7 @@ const posts = [];
 
 const createComments = () => ({
   id: getRandomNumber(1, MAXNUMBERCOMMENTS),
-  avatar: `photos/${getRandomNumber(1, MAXNUMBERAVATAR)}.svg.`,
+  avatar: `img/Avatar-${getRandomNumber(1, MAXNUMBERAVATAR)}.svg`,
   message: MESSAGES[getRandomPositiveInteger(0, MESSAGES.length - 1)],
   name: NAMES[getRandomPositiveInteger(0, NAMES.length - 1)],
 });
