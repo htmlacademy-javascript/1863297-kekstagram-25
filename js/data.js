@@ -1,4 +1,4 @@
-import {getRandomNumber, getRandomPositiveInteger} from './utils.js';
+import { getRandomNumber, getRandomPositiveInteger } from './utils.js';
 
 const MAXNUMBERCOMMENTS = 100;
 const MAXNUMBERLIKES = 200;
@@ -55,7 +55,7 @@ const posts = [];
 
 const createComments = () => ({
   id: getRandomNumber(1, MAXNUMBERCOMMENTS),
-  avatar: `photos/${getRandomNumber(1, MAXNUMBERAVATAR)}.svg.`,
+  avatar: `img/Avatar-${getRandomNumber(1, MAXNUMBERAVATAR)}.svg`,
   message: MESSAGES[getRandomPositiveInteger(0, MESSAGES.length - 1)],
   name: NAMES[getRandomPositiveInteger(0, NAMES.length - 1)],
 });
@@ -68,10 +68,6 @@ const createPosts = (id) => ({
   comments: comments,
 });
 
-const postsRandElement = () => {
-  const rand = Math.floor(Math.random() * posts.length);
-  return posts[rand];
-};
 
 for (let i = 0; i < AMTCOMMENTS; i++) {
   comments.push(createComments());
@@ -81,6 +77,7 @@ for (let i = 0; i < AMTPOSTS; i++) {
   posts.push(createPosts(i+1));
 }
 
-export {createPosts};
-export {posts};
-
+export { createPosts };
+export { posts };
+export { createComments };
+export { AMTCOMMENTS };
