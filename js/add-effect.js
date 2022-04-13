@@ -1,16 +1,16 @@
-const EFFECTS = ['effects__preview--chrome', 'effects__preview--sepia', 'effects__preview--marvin', 'effects__preview--phobos', 'effects__preview--heat'];
-const NONE = 'none';
-const UNSET = 'unset';
-const BLOCK = 'block';
-const SLIDER_ELEMENT = document.querySelector('.effect-level__slider');
-const SLIDER_VALUE = document.querySelector('.effect-level__value');
-const EFFECT_LEVEL = document.querySelector('.effect-level');
-const IMAGE_PREVIEW = document.querySelector('.img-upload__preview');
-const EFFECT_NONE = document.querySelector('#effect-none');
+const effects = ['effects__preview--chrome', 'effects__preview--sepia', 'effects__preview--marvin', 'effects__preview--phobos', 'effects__preview--heat'];
+const none = 'none';
+const unset = 'unset';
+const block = 'block';
+const sliderElement = document.querySelector('.effect-level__slider');
+const sliderValue = document.querySelector('.effect-level__value');
+const effectLevel = document.querySelector('.effect-level');
+const imagePreview = document.querySelector('.img-upload__preview');
+const effectNone = document.querySelector('#effect-none');
 
-EFFECT_LEVEL.style.display = 'none';
+effectLevel.style.display = 'none';
 
-noUiSlider.create(SLIDER_ELEMENT, {
+noUiSlider.create(sliderElement, {
   range: {
     min: 0,
     max: 100,
@@ -67,18 +67,18 @@ const effectsSettingList = {
     unit: '',
   },
   none: {
-    className: EFFECTS,
+    className: effects,
     filterName: 'unset',
   },
 };
 
 function checkEffect(effect) {
   if (effect === 'none') {
-    IMAGE_PREVIEW.classList.remove(effectsSettingList[effect].className);
-    IMAGE_PREVIEW.style.filter = effectsSettingList[effect].filterName;
-    SLIDER_VALUE.value = '';
+    imagePreview.classList.remove(effectsSettingList[effect].className);
+    imagePreview.style.filter = effectsSettingList[effect].filterName;
+    sliderValue.value = '';
   } else {
-    SLIDER_ELEMENT.noUiSlider.updateOptions({
+    sliderElement.noUiSlider.updateOptions({
       range: {
         min: effectsSettingList[effect].min,
         max: effectsSettingList[effect].max,
@@ -86,27 +86,27 @@ function checkEffect(effect) {
       start: effectsSettingList[effect].start,
       step: effectsSettingList[effect].step,
     });
-    IMAGE_PREVIEW.classList.add('effectsSettingList[effect].className');
-    SLIDER_ELEMENT.noUiSlider.on('update', (__, handle, unencoded) => {
-      IMAGE_PREVIEW.style.filter = `${effectsSettingList[effect].filterName}(${unencoded[handle]}${effectsSettingList[effect].unit})`;
-      SLIDER_VALUE.value = unencoded[handle];
+    imagePreview.classList.add('effectsSettingList[effect].className');
+    sliderElement.noUiSlider.on('update', (__, handle, unencoded) => {
+      imagePreview.style.filter = `${effectsSettingList[effect].filterName}(${unencoded[handle]}${effectsSettingList[effect].unit})`;
+      sliderValue.value = unencoded[handle];
     });
   }
 }
 
 function addEffect(evt) {
   const effectName = evt.target.value;
-  EFFECT_LEVEL.style.display = NONE;
-  EFFECT_LEVEL.style.display = effectName !== NONE ? BLOCK : NONE;
+  effectLevel.style.display = none;
+  effectLevel.style.display = effectName !== none ? block : none;
   checkEffect(effectName);
 }
 
 function dropEffect() {
-  IMAGE_PREVIEW.classList.remove(...EFFECTS);
-  IMAGE_PREVIEW.style.filter = UNSET;
-  SLIDER_VALUE.value = '';
-  EFFECT_LEVEL.style.display = NONE;
-  EFFECT_NONE.checked = true;
+  imagePreview.classList.remove(...effects);
+  imagePreview.style.filter = unset;
+  sliderValue.value = '';
+  effectLevel.style.display = none;
+  effectNone.checked = true;
 }
 
 export { addEffect, dropEffect };

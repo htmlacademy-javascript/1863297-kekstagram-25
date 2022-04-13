@@ -1,4 +1,4 @@
-const ALERT_TEMPLATE = document.querySelector('#alert').content;
+const alertTemplate = document.querySelector('#alert').content;
 const ALERT_MESSAGE = 'Не удалось получить данные. Попробуйте ещё раз';
 const ALERT_SHOW_TIME = 5000;
 
@@ -19,7 +19,7 @@ const getRandomItems = (data, count) => {
 const isEscEvent = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
 
 const showAlert = (alertMessage) => {
-  const allertElement = ALERT_TEMPLATE.cloneNode(true);
+  const allertElement = alertTemplate.cloneNode(true);
   const allertInner = allertElement.querySelector('.alert__inner');
   alertMessage = ALERT_MESSAGE;
   allertInner.textContent = alertMessage;

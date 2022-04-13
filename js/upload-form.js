@@ -4,14 +4,14 @@ import { pristine } from './utils/validate.js';
 import { sendData } from './api.js';
 
 const UPLOAD_URL = 'https://25.javascript.pages.academy/kekstagram';
-const BODY = document.querySelector('body');
-const UPLOAD_INPUT = document.querySelector('.img-upload__input');
-const IMG_UPLOAD_FORM = document.querySelector('.img-upload__form');
-const UPLOAD_IMAGE_FORM = document.querySelector('.img-upload__overlay');
-const UPLOAD_IMAGE_CLOSE_BUTTON = document.querySelector('.img-upload__cancel');
-const HASTAGS_INPUT = document.querySelector('.text__hashtags');
-const IMAGE_COMMENT = document.querySelector('.text__description');
-const IMAGE_PREVIEW = document.querySelector('.img-upload__preview img');
+const body = document.querySelector('body');
+const uploadInput = document.querySelector('.img-upload__input');
+const imgUploadForm = document.querySelector('.img-upload__form');
+const uploadImageForm = document.querySelector('.img-upload__overlay');
+const uploadImageCloseButton = document.querySelector('.img-upload__cancel');
+const hashtagsInput = document.querySelector('.text__hashtags');
+const imageComment = document.querySelector('.text__description');
+const imagePreview = document.querySelector('.img-upload__preview img');
 
 const onUploadImageFormEsc = (evt) => {
   if (evt.keyCode === 27) {
@@ -27,16 +27,16 @@ const onEscKey = (evt) => {
   }
 };
 
-HASTAGS_INPUT.addEventListener('keydown', onEscKey);
-IMAGE_COMMENT.addEventListener('keydown', onEscKey);
+hashtagsInput.addEventListener('keydown', onEscKey);
+imageComment.addEventListener('keydown', onEscKey);
 
 const openUploadImageForm = function () {
   if (this.files[0]) {
     const previewImg = new FileReader();
     previewImg.addEventListener('load', () => {
-      IMAGE_PREVIEW.setAttribute('src', previewImg.result);
-      UPLOAD_IMAGE_FORM.classList.remove('hidden');
-      BODY.classList.add('modal-open');
+      imagePreview.setAttribute('src', previewImg.result);
+      uploadImageForm.classList.remove('hidden');
+      body.classList.add('modal-open');
       document.querySelector('.scale__control--smaller').addEventListener('click', zoomImageDown);
       document.querySelector('.scale__control--bigger').addEventListener('click', zoomImageUp);
       document.addEventListener('keydown', onUploadImageFormEsc);
@@ -48,20 +48,20 @@ const openUploadImageForm = function () {
 };
 
 const closeUploadImageForm = () => {
-  UPLOAD_IMAGE_FORM.classList.add('hidden');
-  BODY.classList.remove('modal-open');
-  UPLOAD_INPUT.value = null;
-  HASTAGS_INPUT.value = '';
-  IMAGE_COMMENT.value = '';
+  uploadImageForm.classList.add('hidden');
+  body.classList.remove('modal-open');
+  uploadInput.value = null;
+  hashtagsInput.value = '';
+  imageComment.value = '';
   zoomImageDrop();
   dropEffect();
   pristine.reset();
   document.removeEventListener('keydown', onUploadImageFormEsc);
 };
 
-UPLOAD_INPUT.addEventListener('change', openUploadImageForm);
+uploadInput.addEventListener('change', openUploadImageForm);
 
-UPLOAD_IMAGE_CLOSE_BUTTON.addEventListener('click', closeUploadImageForm);
+uploadImageCloseButton.addEventListener('click', closeUploadImageForm);
 
 const setUserFormSubmit = (onSuccess, onFail) => {
   const onSendData = (evt) => {
@@ -76,7 +76,7 @@ const setUserFormSubmit = (onSuccess, onFail) => {
       );
     }
   };
-  IMG_UPLOAD_FORM.addEventListener('submit', onSendData);
+  imgUploadForm.addEventListener('submit', onSendData);
 };
 
 export { openUploadImageForm, closeUploadImageForm, setUserFormSubmit };

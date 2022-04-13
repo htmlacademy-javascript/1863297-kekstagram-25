@@ -1,11 +1,11 @@
 import { isEscEvent } from './util.js';
 
-const SUCCES_TEMPLATE = document.querySelector('#success').content.querySelector('.success');
-const ERROR_TEMPLATE = document.querySelector('#error').content.querySelector('.error');
+const successTemplate = document.querySelector('#success').content.querySelector('.success');
+const errorTemplate = document.querySelector('#error').content.querySelector('.error');
 
 const messagesTypes = {
-  success: SUCCES_TEMPLATE,
-  error: ERROR_TEMPLATE,
+  success: successTemplate,
+  error: errorTemplate,
 };
 
 const deleteMessagePopup = () => {
