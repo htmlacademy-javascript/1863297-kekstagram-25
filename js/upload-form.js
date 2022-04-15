@@ -14,10 +14,20 @@ const onHashtagsInput = document.querySelector('.text__hashtags');
 const onImageComment = document.querySelector('.text__description');
 const imagePreview = document.querySelector('.img-upload__preview img');
 
+const closeUploadImageForm = () => {
+  uploadImageForm.classList.add('hidden');
+  body.classList.remove('modal-open');
+  onUploadInput.value = null;
+  onHashtagsInput.value = '';
+  onImageComment.value = '';
+  zoomImageDrop();
+  dropEffect();
+  pristine.reset();
+}
+
 const onUploadImageFormEsc = (evt) => {
   if (stopEscPropagation) {
     evt.preventDefault();
-    // eslint-disable-next-line no-use-before-define
     closeUploadImageForm();
   }
 };
@@ -46,18 +56,6 @@ const openUploadImageForm = function () {
 
     onPreviewImg.readAsDataURL(this.files[0]);
   }
-};
-
-const closeUploadImageForm = () => {
-  uploadImageForm.classList.add('hidden');
-  body.classList.remove('modal-open');
-  onUploadInput.value = null;
-  onHashtagsInput.value = '';
-  onImageComment.value = '';
-  zoomImageDrop();
-  dropEffect();
-  pristine.reset();
-  document.removeEventListener('keydown', onUploadImageFormEsc);
 };
 
 onUploadInput.addEventListener('change', openUploadImageForm);
