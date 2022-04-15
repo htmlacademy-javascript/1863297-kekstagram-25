@@ -1,12 +1,9 @@
-import { loadData } from './api.js';
-import { closeUploadImageForm } from './upload-form.js';
+import { loadData, DOWNLOAD_URL } from './api.js';
+import { onCloseUploadImageFormClick } from './upload-form.js';
 import { setUserFormSubmit } from './upload-form.js';
 import { renderMessagePopup } from './messages.js';
 import { showAlert } from './util.js';
 import { addFiltersPhotos } from './filters.js';
-
-
-const DOWNLOAD_URL = 'https://25.javascript.pages.academy/kekstagram/data';
 
 loadData(
   addFiltersPhotos,
@@ -15,12 +12,12 @@ loadData(
 );
 
 const executeFormSuccess = () => {
-  closeUploadImageForm();
+  onCloseUploadImageFormClick();
   renderMessagePopup('success');
 };
 
 const executeFormError = () => {
-  closeUploadImageForm();
+  onCloseUploadImageFormClick();
   renderMessagePopup('error');
 };
 

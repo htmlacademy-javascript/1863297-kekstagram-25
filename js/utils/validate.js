@@ -1,4 +1,4 @@
-import { stopEscPropagation } from '../util.js';
+import { isEscEvent } from '../util.js';
 
 const HASHTAGS_MAX_COUNT = 5;
 const HASHTAGS_MIN_SYMBOLS = 2;
@@ -7,11 +7,11 @@ const HASHTAGS_REGEX = /^#[A-Za-zА-Яа-яЕё0-9]{1,19}$/;
 const DESCRIPTION_MAX_LENGTH = 140;
 
 const pictureUploadForm = document.querySelector('.img-upload__form');
-const onPictureUploadHashtags = pictureUploadForm.querySelector('.text__hashtags');
-const onPictureUploadDescr = pictureUploadForm.querySelector('.text__description');
+const pictureUploadHashtags = pictureUploadForm.querySelector('.text__hashtags');
+const pictureUploadDescr = pictureUploadForm.querySelector('.text__description');
 
-const splitHashtags = ((HashtagsString) =>
-  HashtagsString.trim().toLowerCase().split(' ').filter((element) => element !== '')
+const splitHashtags = ((hashtagsString) =>
+  hashtagsString.trim().toLowerCase().split(' ').filter((element) => element !== '')
 );
 
 const validateTagOnlyHash = ((value) =>
@@ -51,15 +51,15 @@ const pristine = new Pristine(pictureUploadForm, {
   errorTextClass: 'text__error'
 });
 
-pristine.addValidator(onPictureUploadHashtags, validateTagOnlyHash, 'ХешТег не должен состоять только из #.');
-pristine.addValidator(onPictureUploadHashtags, validateTagFromHash, 'ХешТег должен состоять из # и хотя бы одного символа.');
-pristine.addValidator(onPictureUploadHashtags, validateTagsOverflow, `Максимальное кол-во хештегов ${HASHTAGS_MAX_COUNT} штук.`);
-pristine.addValidator(onPictureUploadHashtags, validateTagsDublicate, 'Все хештеги должны быть уникальными.');
-pristine.addValidator(onPictureUploadHashtags, validateTagsLengthMinMax, `Длина хештега должна быть больше ${HASHTAGS_MIN_SYMBOLS} и меньше ${HASHTAGS_MAX_SYMBOLS} символов.`);
-pristine.addValidator(onPictureUploadHashtags, validateTagsRegExp, 'Хештег должен состоять только из букв и цифр');
-pristine.addValidator(onPictureUploadDescr, validateDescrLength, `Длина описания не должна превышать ${DESCRIPTION_MAX_LENGTH} символов`);
+pristine.addValidator(pictureUploadHashtags, validateTagOnlyHash, 'ХешТег не должен состоять только из #.');
+pristine.addValidator(pictureUploadHashtags, validateTagFromHash, 'ХешТег должен состоять из # и хотя бы одного символа.');
+pristine.addValidator(pictureUploadHashtags, validateTagsOverflow, `Максимальное кол-во хештегов ${HASHTAGS_MAX_COUNT} штук.`);
+pristine.addValidator(pictureUploadHashtags, validateTagsDublicate, 'Все хештеги должны быть уникальными.');
+pristine.addValidator(pictureUploadHashtags, validateTagsLengthMinMax, `Длина хештега должна быть больше ${HASHTAGS_MIN_SYMBOLS} и меньше ${HASHTAGS_MAX_SYMBOLS} символов.`);
+pristine.addValidator(pictureUploadHashtags, validateTagsRegExp, 'Хештег должен состоять только из букв и цифр');
+pristine.addValidator(pictureUploadDescr, validateDescrLength, `Длина описания не должна превышать ${DESCRIPTION_MAX_LENGTH} символов`);
 
-onPictureUploadHashtags.addEventListener('keydown', stopEscPropagation);
-onPictureUploadDescr.addEventListener('keydown', stopEscPropagation);
+pictureUploadHashtags.addEventListener('keydown', isEscEvent);
+pictureUploadDescr.addEventListener('keydown', isEscEvent);
 
 export { pristine };

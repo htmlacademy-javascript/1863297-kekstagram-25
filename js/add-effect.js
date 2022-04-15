@@ -94,14 +94,14 @@ function checkEffect(effect) {
   }
 }
 
-function addEffect(evt) {
+function onEffectListAddEffectChange(evt) {
   const effectName = evt.target.value;
   effectLevel.style.display = NONE;
   effectLevel.style.display = effectName !== NONE ? BLOCK : NONE;
   checkEffect(effectName);
 }
 
-function dropEffect() {
+function onEffectListDropEffectClick() {
   imagePreview.classList.remove(...EFFECTS);
   imagePreview.style.filter = UNSET;
   sliderValue.value = '';
@@ -109,4 +109,4 @@ function dropEffect() {
   effectNone.checked = true;
 }
 
-export { addEffect, dropEffect };
+export { onEffectListAddEffectChange, onEffectListDropEffectClick };

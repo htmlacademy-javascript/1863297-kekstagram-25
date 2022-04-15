@@ -8,11 +8,10 @@ const bigPictureComments = bigPicture.querySelector('.comments-count');
 const bigPictureComment = bigPicture.querySelector('.comment-count');
 const bigPictureDescription = bigPicture.querySelector('.social__caption');
 const bigPictureCommentsCount = bigPicture.querySelector('.social__comment-count');
-const onBigPictureCommentsLoader = bigPicture.querySelector('.comments-loader');
-const onCancelButton = bigPicture.querySelector('.big-picture__cancel');
+const bigPictureCommentsLoader = bigPicture.querySelector('.comments-loader');
+const cancelButton = bigPicture.querySelector('.big-picture__cancel');
 const commentsList = document.querySelector('.social__comments');
 const commentTemplate = document.querySelector('#social__comment').content;
-const body = document.body;
 let currentPage = 1;
 let comments = [];
 
@@ -34,9 +33,9 @@ const getPictureComments = () => {
   });
 
   if (showMore) {
-    onBigPictureCommentsLoader.classList.remove('hidden');
+    bigPictureCommentsLoader.classList.remove('hidden');
   } else {
-    onBigPictureCommentsLoader.classList.add('hidden');
+    bigPictureCommentsLoader.classList.add('hidden');
   }
   return fragment;
 };
@@ -51,7 +50,7 @@ const onShowMoreClick = () => {
   renderComments();
 };
 
-onBigPictureCommentsLoader.addEventListener('click', onShowMoreClick);
+bigPictureCommentsLoader.addEventListener('click', onShowMoreClick);
 
 const showBigPicture = (photo) => {
   bigPicture.classList.remove('hidden');
@@ -63,26 +62,26 @@ const showBigPicture = (photo) => {
   comments = photo.comments;
   currentPage = 1;
   renderComments();
-  body.classList.add('modal-open');
+  document.body.classList.add('modal-open');
 };
 
 const changeClass = () => {
   bigPicture.classList.add('hidden');
   bigPictureCommentsCount.classList.add('hidden');
-  body.classList.remove('modal-open');
+  document.body.classList.remove('modal-open');
 };
 
-const addButtonClass = () => {
+const onButtonClick = () => {
   changeClass();
 };
 
-const hidePopup = () => {
+const onPopupkeydown = () => {
   if (stopEscPropagation) {
     changeClass();
   }
 };
 
-onCancelButton.addEventListener ('click', addButtonClass);
-document.addEventListener('keydown', hidePopup);
+cancelButton.addEventListener ('click', onButtonClick);
+document.addEventListener('keydown', onPopupkeydown);
 
 export {showBigPicture};

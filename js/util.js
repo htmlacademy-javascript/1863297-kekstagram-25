@@ -21,6 +21,12 @@ const getRandomItems = (data, count) => {
 
 const isEscEvent = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
 
+const stopEscPropagation = ((evt) => {
+  if (isEscEvent(evt)) {
+    evt.stopPropagation();
+  }
+});
+
 const showAlert = (alertMessage) => {
   const alertElement = alertTemplate.cloneNode(true);
   const alertInner = alertElement.querySelector('.alert__inner');
@@ -42,12 +48,6 @@ function debounce(callback, timeoutDelay = TIMEOUT_DELAY) {
     timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
   };
 }
-
-const stopEscPropagation = ((evt) => {
-  if (isEscEvent(evt)) {
-    evt.stopPropogation();
-  }
-});
 
 export {
   ALERT_MESSAGE,

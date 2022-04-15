@@ -1,5 +1,7 @@
 import { ALERT_MESSAGE } from './util.js';
 
+const DOWNLOAD_URL = 'https://25.javascript.pages.academy/kekstagram/data';
+const UPLOAD_URL = 'https://25.javascript.pages.academy/kekstagram';
 const FAIL_MESSAGE = 'Не удалось отправить данные. Попробуйте ещё раз';
 const POST = 'POST';
 
@@ -39,4 +41,4 @@ const sendData = (onSuccess, onError, body, url) => {
     });
 };
 
-export {loadData, sendData};
+export {loadData, sendData,UPLOAD_URL, DOWNLOAD_URL};

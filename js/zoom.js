@@ -4,7 +4,7 @@ const zoomInput = document.querySelector('.scale__control--value');
 let zoomValue = Number(zoomInput.value.slice(0, -1)); //отрежет проценты %
 const imagePreview = document.querySelector('.img-upload__preview');
 
-function zoomImageUp(evt) {
+function onZoomImageUpClick(evt) {
   evt.preventDefault();
   if(zoomValue < MAX_ZOOM_VALUE) {
     zoomValue += MIN_ZOOM_VALUE;
@@ -13,7 +13,7 @@ function zoomImageUp(evt) {
   }
 }
 
-function zoomImageDown(evt) {
+function onZoomImageDownClick(evt) {
   evt.preventDefault();
   if(zoomValue > MIN_ZOOM_VALUE) {
     zoomValue -= MIN_ZOOM_VALUE;
@@ -22,10 +22,10 @@ function zoomImageDown(evt) {
   }
 }
 
-function zoomImageDrop() {
+function onZoomImageDropClick() {
   zoomValue = MAX_ZOOM_VALUE;
   zoomInput.value = `${zoomValue} %`;
   imagePreview.style.transform = `scale(${zoomValue / MAX_ZOOM_VALUE})`;
 }
 
-export {zoomImageUp, zoomImageDown, zoomImageDrop};
+export {onZoomImageUpClick, onZoomImageDownClick, onZoomImageDropClick};

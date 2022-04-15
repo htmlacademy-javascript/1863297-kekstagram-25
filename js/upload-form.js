@@ -1,69 +1,63 @@
-import { zoomImageUp, zoomImageDown, zoomImageDrop } from './zoom.js';
-import { addEffect, dropEffect } from './add-effect.js';
+import { onZoomImageUpClick, onZoomImageDownClick, onZoomImageDropClick } from './zoom.js';
+import { onEffectListAddEffectChange, onEffectListDropEffectClick } from './add-effect.js';
 import { pristine } from './utils/validate.js';
 import { sendData } from './api.js';
-import { stopEscPropagation } from './util.js';
+import { UPLOAD_URL } from './api.js';
 
-const UPLOAD_URL = 'https://25.javascript.pages.academy/kekstagram';
-const body = document.body;
-const onUploadInput = document.querySelector('.img-upload__input');
-const onImgUploadForm = document.querySelector('.img-upload__form');
+const uploadInput = document.querySelector('.img-upload__input');
+const imgUploadForm = document.querySelector('.img-upload__form');
 const uploadImageForm = document.querySelector('.img-upload__overlay');
-const onUploadImageCloseButton = document.querySelector('.img-upload__cancel');
-const onHashtagsInput = document.querySelector('.text__hashtags');
-const onImageComment = document.querySelector('.text__description');
+const uploadImageCloseButton = document.querySelector('.img-upload__cancel');
+const hashtagsInput = document.querySelector('.text__hashtags');
+const imageComment = document.querySelector('.text__description');
 const imagePreview = document.querySelector('.img-upload__preview img');
 
-const closeUploadImageForm = () => {
+const onCloseUploadImageFormClick = () => {
   uploadImageForm.classList.add('hidden');
-  body.classList.remove('modal-open');
-  onUploadInput.value = null;
-  onHashtagsInput.value = '';
-  onImageComment.value = '';
-  zoomImageDrop();
-  dropEffect();
+  document.body.classList.remove('modal-open');
+  uploadInput.value = null;
+  hashtagsInput.value = '';
+  imageComment.value = '';
+  onZoomImageDropClick();
+  onEffectListDropEffectClick();
   pristine.reset();
 };
 
-const onUploadImageFormEsc = (evt) => {
-  if (stopEscPropagation) {
-    evt.preventDefault();
-    closeUploadImageForm();
-  }
+const onUploadImageFormEscKeydown = (evt) => {
+  evt.preventDefault();
+  onCloseUploadImageFormClick();
 };
 
 const onEscKey = (evt) => {
-  if (stopEscPropagation) {
-    evt.stopPropagation();
-  }
+  evt.stopPropagation();
 };
 
-onHashtagsInput.addEventListener('keydown', onEscKey);
-onImageComment.addEventListener('keydown', onEscKey);
+hashtagsInput.addEventListener('keydown', onEscKey);
+imageComment.addEventListener('keydown', onEscKey);
 
-const openUploadImageForm = function () {
+function onOpenUploadImageFormChange() {
   if (this.files[0]) {
-    const onPreviewImg = new FileReader();
-    onPreviewImg.addEventListener('load', () => {
-      imagePreview.setAttribute('src', onPreviewImg.result);
+    const previewImg = new FileReader();
+    previewImg.addEventListener('load', () => {
+      imagePreview.setAttribute('src', previewImg.result);
       uploadImageForm.classList.remove('hidden');
-      body.classList.add('modal-open');
-      document.querySelector('.scale__control--smaller').addEventListener('click', zoomImageDown);
-      document.querySelector('.scale__control--bigger').addEventListener('click', zoomImageUp);
-      document.addEventListener('keydown', onUploadImageFormEsc);
-      document.querySelector('.effects__list').addEventListener('change', addEffect);
+      document.body.classList.add('modal-open');
+      document.querySelector('.scale__control--smaller').addEventListener('click', onZoomImageDownClick);
+      document.querySelector('.scale__control--bigger').addEventListener('click', onZoomImageUpClick);
+      document.addEventListener('keydown', onUploadImageFormEscKeydown);
+      document.querySelector('.effects__list').addEventListener('change', onEffectListAddEffectChange);
     }, false);
 
-    onPreviewImg.readAsDataURL(this.files[0]);
+    previewImg.readAsDataURL(this.files[0]);
   }
-};
+}
 
-onUploadInput.addEventListener('change', openUploadImageForm);
+uploadInput.addEventListener('change', onOpenUploadImageFormChange);
 
-onUploadImageCloseButton.addEventListener('click', closeUploadImageForm);
+uploadImageCloseButton.addEventListener('click', onCloseUploadImageFormClick);
 
 const setUserFormSubmit = (onSuccess, onFail) => {
-  const onSendData = (evt) => {
+  const onSendDataSubmit = (evt) => {
     evt.preventDefault();
     if (pristine.validate()) {
       evt.preventDefault();
@@ -75,7 +69,7 @@ const setUserFormSubmit = (onSuccess, onFail) => {
       );
     }
   };
-  onImgUploadForm.addEventListener('submit', onSendData);
+  imgUploadForm.addEventListener('submit', onSendDataSubmit);
 };
 
-export { openUploadImageForm, closeUploadImageForm, setUserFormSubmit };
+export { onOpenUploadImageFormChange, onCloseUploadImageFormClick, setUserFormSubmit };
