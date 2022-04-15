@@ -1,5 +1,6 @@
+import { stopEscPropagation } from './util.js';
+
 const PAGE_SIZE = 5;
-const ESC_KEY_CODE = 27;
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureImg = bigPicture.querySelector('.big-picture__img img');
 const bigPictureLikes = bigPicture.querySelector('.likes-count');
@@ -7,11 +8,11 @@ const bigPictureComments = bigPicture.querySelector('.comments-count');
 const bigPictureComment = bigPicture.querySelector('.comment-count');
 const bigPictureDescription = bigPicture.querySelector('.social__caption');
 const bigPictureCommentsCount = bigPicture.querySelector('.social__comment-count');
-const bigPictureCommentsLoader = bigPicture.querySelector('.comments-loader');
-const CancelButton = bigPicture.querySelector('.big-picture__cancel');
-const CommentsList = document.querySelector('.social__comments');
-const CommentTemplate = document.querySelector('#social__comment').content;
-const body = document.querySelector('body');
+const onBigPictureCommentsLoader = bigPicture.querySelector('.comments-loader');
+const onCancelButton = bigPicture.querySelector('.big-picture__cancel');
+const commentsList = document.querySelector('.social__comments');
+const commentTemplate = document.querySelector('#social__comment').content;
+const body = document.body;
 let currentPage = 1;
 let comments = [];
 
@@ -23,7 +24,7 @@ const getPictureComments = () => {
 
   comments.slice(0, count-1).forEach((comment) => {
     const {avatar, name, message} = comment;
-    const commentElement = CommentTemplate.cloneNode(true);
+    const commentElement = commentTemplate.cloneNode(true);
 
     commentElement.querySelector('.social__picture').src = avatar;
     commentElement.querySelector('.social__picture').alt = name;
@@ -33,16 +34,16 @@ const getPictureComments = () => {
   });
 
   if (showMore) {
-    bigPictureCommentsLoader.classList.remove('hidden');
+    onBigPictureCommentsLoader.classList.remove('hidden');
   } else {
-    bigPictureCommentsLoader.classList.add('hidden');
+    onBigPictureCommentsLoader.classList.add('hidden');
   }
   return fragment;
 };
 
 const renderComments = () => {
-  CommentsList.textContent = '';
-  CommentsList.appendChild(getPictureComments());
+  commentsList.textContent = '';
+  commentsList.appendChild(getPictureComments());
 };
 
 const onShowMoreClick = () => {
@@ -50,7 +51,7 @@ const onShowMoreClick = () => {
   renderComments();
 };
 
-bigPictureCommentsLoader.addEventListener('click', onShowMoreClick);
+onBigPictureCommentsLoader.addEventListener('click', onShowMoreClick);
 
 const showBigPicture = (photo) => {
   bigPicture.classList.remove('hidden');
@@ -75,13 +76,13 @@ const addButtonClass = () => {
   changeClass();
 };
 
-const hidePopup = (evt) => {
-  if (evt.keyCode === ESC_KEY_CODE) {
+const hidePopup = () => {
+  if (stopEscPropagation) {
     changeClass();
   }
 };
 
-CancelButton.addEventListener ('click', addButtonClass);
+onCancelButton.addEventListener ('click', addButtonClass);
 document.addEventListener('keydown', hidePopup);
 
 export {showBigPicture};

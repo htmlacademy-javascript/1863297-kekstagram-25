@@ -1,4 +1,5 @@
-const ALERT_MESSAGE = 'Не удалось получить данные. Попробуйте ещё раз';
+import { ALERT_MESSAGE } from './util.js';
+
 const FAIL_MESSAGE = 'Не удалось отправить данные. Попробуйте ещё раз';
 const POST = 'POST';
 
@@ -14,7 +15,6 @@ const loadData = (onSuccess, onError, url) => {
     .then((pictures) => {
       onSuccess(pictures);
     })
-
     .catch((error) => {
       onError(error);
     });

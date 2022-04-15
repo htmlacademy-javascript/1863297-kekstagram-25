@@ -1,7 +1,7 @@
-const effects = ['effects__preview--chrome', 'effects__preview--sepia', 'effects__preview--marvin', 'effects__preview--phobos', 'effects__preview--heat'];
-const none = 'none';
-const unset = 'unset';
-const block = 'block';
+const EFFECTS = ['effects__preview--chrome', 'effects__preview--sepia', 'effects__preview--marvin', 'effects__preview--phobos', 'effects__preview--heat'];
+const NONE = 'none';
+const UNSET = 'unset';
+const BLOCK = 'block';
 const sliderElement = document.querySelector('.effect-level__slider');
 const sliderValue = document.querySelector('.effect-level__value');
 const effectLevel = document.querySelector('.effect-level');
@@ -67,13 +67,13 @@ const effectsSettingList = {
     unit: '',
   },
   none: {
-    className: effects,
+    className: EFFECTS,
     filterName: 'unset',
   },
 };
 
 function checkEffect(effect) {
-  if (effect === 'none') {
+  if (effect === NONE) {
     imagePreview.classList.remove(effectsSettingList[effect].className);
     imagePreview.style.filter = effectsSettingList[effect].filterName;
     sliderValue.value = '';
@@ -96,16 +96,16 @@ function checkEffect(effect) {
 
 function addEffect(evt) {
   const effectName = evt.target.value;
-  effectLevel.style.display = none;
-  effectLevel.style.display = effectName !== none ? block : none;
+  effectLevel.style.display = NONE;
+  effectLevel.style.display = effectName !== NONE ? BLOCK : NONE;
   checkEffect(effectName);
 }
 
 function dropEffect() {
-  imagePreview.classList.remove(...effects);
-  imagePreview.style.filter = unset;
+  imagePreview.classList.remove(...EFFECTS);
+  imagePreview.style.filter = UNSET;
   sliderValue.value = '';
-  effectLevel.style.display = none;
+  effectLevel.style.display = NONE;
   effectNone.checked = true;
 }
 
