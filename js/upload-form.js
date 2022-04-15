@@ -23,7 +23,7 @@ const closeUploadImageForm = () => {
   zoomImageDrop();
   dropEffect();
   pristine.reset();
-}
+};
 
 const onUploadImageFormEsc = (evt) => {
   if (stopEscPropagation) {
