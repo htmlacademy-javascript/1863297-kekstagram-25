@@ -27,6 +27,7 @@ const onDocumentKeydown = (evt) => {
     evt.preventDefault();
     deleteMessagePopup();
     document.removeEventListener('keydown', onDocumentKeydown);
+    document.removeEventListener('keydown', deleteMessagePopup);
   }
 };
 
