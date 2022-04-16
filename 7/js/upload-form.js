@@ -1,10 +1,9 @@
-import { zoomImageUp, zoomImageDown, zoomImageDrop } from './zoom.js';
-import { addEffect, dropEffect } from './add-effect.js';
+import { onZoomImageUpClick, onZoomImageDownClick, onZoomImageDropClick } from './zoom.js';
+import { onEffectListAddEffectChange, onEffectListDropEffectClick } from './add-effect.js';
 import { pristine } from './utils/validate.js';
 import { sendData } from './api.js';
+import { UPLOAD_URL } from './api.js';
 
-const UPLOAD_URL = 'https://25.javascript.pages.academy/kekstagram';
-const body = document.querySelector('body');
 const uploadInput = document.querySelector('.img-upload__input');
 const imgUploadForm = document.querySelector('.img-upload__form');
 const uploadImageForm = document.querySelector('.img-upload__overlay');
@@ -13,58 +12,52 @@ const hashtagsInput = document.querySelector('.text__hashtags');
 const imageComment = document.querySelector('.text__description');
 const imagePreview = document.querySelector('.img-upload__preview img');
 
-const onUploadImageFormEsc = (evt) => {
-  if (evt.keyCode === 27) {
-    evt.preventDefault();
-    // eslint-disable-next-line no-use-before-define
-    closeUploadImageForm();
-  }
+const onCloseUploadImageFormClick = () => {
+  uploadImageForm.classList.add('hidden');
+  document.body.classList.remove('modal-open');
+  uploadInput.value = null;
+  hashtagsInput.value = '';
+  imageComment.value = '';
+  onZoomImageDropClick();
+  onEffectListDropEffectClick();
+  pristine.reset();
+};
+
+const onUploadImageFormEscKeydown = (evt) => {
+  evt.preventDefault();
+  onCloseUploadImageFormClick();
 };
 
 const onEscKey = (evt) => {
-  if (evt.keyCode === 27) {
-    evt.stopPropagation();
-  }
+  evt.stopPropagation();
 };
 
 hashtagsInput.addEventListener('keydown', onEscKey);
 imageComment.addEventListener('keydown', onEscKey);
 
-const openUploadImageForm = function () {
+function onOpenUploadImageFormChange() {
   if (this.files[0]) {
     const previewImg = new FileReader();
     previewImg.addEventListener('load', () => {
       imagePreview.setAttribute('src', previewImg.result);
       uploadImageForm.classList.remove('hidden');
-      body.classList.add('modal-open');
-      document.querySelector('.scale__control--smaller').addEventListener('click', zoomImageDown);
-      document.querySelector('.scale__control--bigger').addEventListener('click', zoomImageUp);
-      document.addEventListener('keydown', onUploadImageFormEsc);
-      document.querySelector('.effects__list').addEventListener('change', addEffect);
+      document.body.classList.add('modal-open');
+      document.querySelector('.scale__control--smaller').addEventListener('click', onZoomImageDownClick);
+      document.querySelector('.scale__control--bigger').addEventListener('click', onZoomImageUpClick);
+      document.addEventListener('keydown', onUploadImageFormEscKeydown);
+      document.querySelector('.effects__list').addEventListener('change', onEffectListAddEffectChange);
     }, false);
 
     previewImg.readAsDataURL(this.files[0]);
   }
-};
+}
 
-const closeUploadImageForm = () => {
-  uploadImageForm.classList.add('hidden');
-  body.classList.remove('modal-open');
-  uploadInput.value = null;
-  hashtagsInput.value = '';
-  imageComment.value = '';
-  zoomImageDrop();
-  dropEffect();
-  pristine.reset();
-  document.removeEventListener('keydown', onUploadImageFormEsc);
-};
+uploadInput.addEventListener('change', onOpenUploadImageFormChange);
 
-uploadInput.addEventListener('change', openUploadImageForm);
-
-uploadImageCloseButton.addEventListener('click', closeUploadImageForm);
+uploadImageCloseButton.addEventListener('click', onCloseUploadImageFormClick);
 
 const setUserFormSubmit = (onSuccess, onFail) => {
-  const onSendData = (evt) => {
+  const onSendDataSubmit = (evt) => {
     evt.preventDefault();
     if (pristine.validate()) {
       evt.preventDefault();
@@ -76,7 +69,7 @@ const setUserFormSubmit = (onSuccess, onFail) => {
       );
     }
   };
-  imgUploadForm.addEventListener('submit', onSendData);
+  imgUploadForm.addEventListener('submit', onSendDataSubmit);
 };
 
-export { openUploadImageForm, closeUploadImageForm, setUserFormSubmit };
+export { onOpenUploadImageFormChange, onCloseUploadImageFormClick, setUserFormSubmit };

@@ -1,8 +1,12 @@
-const alertTemplate = document.querySelector('#alert').content;
 const ALERT_MESSAGE = 'Не удалось получить данные. Попробуйте ещё раз';
 const ALERT_SHOW_TIME = 5000;
+const MULTIPLICATION_NUMBER = 30;
+const SUBTRACT_NUMBER = 10;
+const TIMEOUT_DELAY = 500;
+const alertTemplate = document.querySelector('#alert').content;
 
-const randomCompareItems = () => Math.floor(Math.random() * 30) - 10;
+
+const randomCompareItems = () => Math.floor(Math.random() * MULTIPLICATION_NUMBER) - SUBTRACT_NUMBER;
 
 const sortByComments = (data) => {
   const arrayPosts = data.slice();
@@ -12,43 +16,41 @@ const sortByComments = (data) => {
 
 const getRandomItems = (data, count) => {
   const mixed = [...data].sort(randomCompareItems);
-
   return mixed.slice(0, count);
 };
 
 const isEscEvent = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
 
-const showAlert = (alertMessage) => {
-  const allertElement = alertTemplate.cloneNode(true);
-  const allertInner = allertElement.querySelector('.alert__inner');
-  alertMessage = ALERT_MESSAGE;
-  allertInner.textContent = alertMessage;
+const stopEscPropagation = ((evt) => {
+  if (isEscEvent(evt)) {
+    evt.stopPropagation();
+  }
+});
 
-  document.body.append(allertInner);
+const showAlert = (alertMessage) => {
+  const alertElement = alertTemplate.cloneNode(true);
+  const alertInner = alertElement.querySelector('.alert__inner');
+  alertMessage = ALERT_MESSAGE;
+  alertInner.textContent = alertMessage;
+
+  document.body.append(alertInner);
 
   setTimeout(() => {
-    allertElement.remove();
+    alertElement.remove();
   }, ALERT_SHOW_TIME);
 };
 
-function debounce(callback, timeoutDelay = 500) {
+function debounce(callback, timeoutDelay = TIMEOUT_DELAY) {
   let timeoutId;
 
   return (...rest) => {
     clearTimeout(timeoutId);
-
     timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
-
   };
 }
 
-const stopEscPropagation = ((evt) => {
-  if (isEscEvent(evt)) {
-    evt.stopPropogation();
-  }
-});
-
 export {
+  ALERT_MESSAGE,
   showAlert,
   isEscEvent,
   getRandomItems,

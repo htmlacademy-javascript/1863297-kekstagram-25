@@ -1,5 +1,6 @@
+import { stopEscPropagation } from './util.js';
+
 const PAGE_SIZE = 5;
-const ESC_KEY_CODE = 27;
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureImg = bigPicture.querySelector('.big-picture__img img');
 const bigPictureLikes = bigPicture.querySelector('.likes-count');
@@ -8,10 +9,9 @@ const bigPictureComment = bigPicture.querySelector('.comment-count');
 const bigPictureDescription = bigPicture.querySelector('.social__caption');
 const bigPictureCommentsCount = bigPicture.querySelector('.social__comment-count');
 const bigPictureCommentsLoader = bigPicture.querySelector('.comments-loader');
-const CancelButton = bigPicture.querySelector('.big-picture__cancel');
-const CommentsList = document.querySelector('.social__comments');
-const CommentTemplate = document.querySelector('#social__comment').content;
-const body = document.querySelector('body');
+const cancelButton = bigPicture.querySelector('.big-picture__cancel');
+const commentsList = document.querySelector('.social__comments');
+const commentTemplate = document.querySelector('#social__comment').content;
 let currentPage = 1;
 let comments = [];
 
@@ -23,7 +23,7 @@ const getPictureComments = () => {
 
   comments.slice(0, count-1).forEach((comment) => {
     const {avatar, name, message} = comment;
-    const commentElement = CommentTemplate.cloneNode(true);
+    const commentElement = commentTemplate.cloneNode(true);
 
     commentElement.querySelector('.social__picture').src = avatar;
     commentElement.querySelector('.social__picture').alt = name;
@@ -41,8 +41,8 @@ const getPictureComments = () => {
 };
 
 const renderComments = () => {
-  CommentsList.textContent = '';
-  CommentsList.appendChild(getPictureComments());
+  commentsList.textContent = '';
+  commentsList.appendChild(getPictureComments());
 };
 
 const onShowMoreClick = () => {
@@ -62,26 +62,26 @@ const showBigPicture = (photo) => {
   comments = photo.comments;
   currentPage = 1;
   renderComments();
-  body.classList.add('modal-open');
+  document.body.classList.add('modal-open');
 };
 
 const changeClass = () => {
   bigPicture.classList.add('hidden');
   bigPictureCommentsCount.classList.add('hidden');
-  body.classList.remove('modal-open');
+  document.body.classList.remove('modal-open');
 };
 
-const addButtonClass = () => {
+const onButtonClick = () => {
   changeClass();
 };
 
-const hidePopup = (evt) => {
-  if (evt.keyCode === ESC_KEY_CODE) {
+const onPopupkeydown = () => {
+  if (stopEscPropagation) {
     changeClass();
   }
 };
 
-CancelButton.addEventListener ('click', addButtonClass);
-document.addEventListener('keydown', hidePopup);
+cancelButton.addEventListener ('click', onButtonClick);
+document.addEventListener('keydown', onPopupkeydown);
 
 export {showBigPicture};

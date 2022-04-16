@@ -8,7 +8,7 @@ const discussed = form.querySelector('#filter-discussed');
 const randomItem = form.querySelector('#filter-random');
 const defaultItem = form.querySelector('#filter-default');
 
-const addFiltersHandler = (photos) => {
+const addFiltersPhotos = (photos) => {
 
   fillPhotos(photos);
 
@@ -41,4 +41,4 @@ const addFiltersHandler = (photos) => {
   );
 };
 
-export {addFiltersHandler};
+export {addFiltersPhotos};
