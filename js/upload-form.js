@@ -21,7 +21,9 @@ const onCloseUploadImageFormClick = () => {
   onZoomImageDropClick();
   onEffectListDropEffectClick();
   pristine.reset();
+
   uploadImageCloseButton.removeEventListener('click', onCloseUploadImageFormClick);
+  uploadInput.removeEventListener('change', onOpenUploadImageFormChange);
 };
 
 const onUploadImageFormEscKeydown = (evt) => {
