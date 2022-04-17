@@ -23,12 +23,12 @@ const onCloseUploadImageFormClick = () => {
   pristine.reset();
 
   uploadImageCloseButton.removeEventListener('click', onCloseUploadImageFormClick);
-  uploadInput.removeEventListener('change', onOpenUploadImageFormChange);
 };
 
 const onUploadImageFormEscKeydown = (evt) => {
   evt.preventDefault();
   onCloseUploadImageFormClick();
+  document.removeEventListener('keydown', onUploadImageFormEscKeydown);
 };
 
 const onEscKey = (evt) => {
