@@ -5,8 +5,8 @@ const UPLOAD_URL = 'https://25.javascript.pages.academy/kekstagram';
 const FAIL_MESSAGE = 'Не удалось отправить данные. Попробуйте ещё раз';
 const POST = 'POST';
 
-const loadData = (onSuccess, onError, url) => {
-  fetch(url)
+const loadData = (onSuccess, onError) => {
+  fetch(DOWNLOAD_URL)
     .then((response) => {
       if (response.ok) {
         return response.json();
@@ -22,8 +22,8 @@ const loadData = (onSuccess, onError, url) => {
     });
 };
 
-const sendData = (onSuccess, onError, body, url) => {
-  fetch(url,
+const sendData = (onSuccess, onError, body) => {
+  fetch(UPLOAD_URL,
     {
       method: POST,
       body,

@@ -1,5 +1,3 @@
-import { stopEscPropagation } from './util.js';
-
 const PAGE_SIZE = 5;
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureImg = bigPicture.querySelector('.big-picture__img img');
@@ -12,6 +10,7 @@ const bigPictureCommentsLoader = bigPicture.querySelector('.comments-loader');
 const cancelButton = bigPicture.querySelector('.big-picture__cancel');
 const commentsList = document.querySelector('.social__comments');
 const commentTemplate = document.querySelector('#social__comment').content;
+
 let currentPage = 1;
 let comments = [];
 
@@ -21,8 +20,8 @@ const getPictureComments = () => {
   const showMore = count < comments.length;
   bigPictureComment.textContent = count < comments.length ? count : comments.length;
 
-  comments.slice(0, count-1).forEach((comment) => {
-    const {avatar, name, message} = comment;
+  comments.slice(0, count - 1).forEach((comment) => {
+    const { avatar, name, message } = comment;
     const commentElement = commentTemplate.cloneNode(true);
 
     commentElement.querySelector('.social__picture').src = avatar;
@@ -52,6 +51,14 @@ const onShowMoreClick = () => {
 
 bigPictureCommentsLoader.addEventListener('click', onShowMoreClick);
 
+const onCloseBigPicture = () => {
+  bigPicture.classList.add('hidden');
+  bigPictureCommentsCount.classList.add('hidden');
+  document.body.classList.remove('modal-open');
+  document.removeEventListener('keydown', onCloseBigPicture);
+  cancelButton.removeEventListener('click', onCloseBigPicture);
+};
+
 const showBigPicture = (photo) => {
   bigPicture.classList.remove('hidden');
   bigPictureImg.src = photo.url;
@@ -63,25 +70,8 @@ const showBigPicture = (photo) => {
   currentPage = 1;
   renderComments();
   document.body.classList.add('modal-open');
+  document.addEventListener('keydown', onCloseBigPicture);
+  cancelButton.addEventListener('click', onCloseBigPicture);
 };
 
-const changeClass = () => {
-  bigPicture.classList.add('hidden');
-  bigPictureCommentsCount.classList.add('hidden');
-  document.body.classList.remove('modal-open');
-};
-
-const onButtonClick = () => {
-  changeClass();
-};
-
-const onPopupkeydown = () => {
-  if (stopEscPropagation) {
-    changeClass();
-  }
-};
-
-cancelButton.addEventListener ('click', onButtonClick);
-document.addEventListener('keydown', onPopupkeydown);
-
-export {showBigPicture};
+export { showBigPicture };

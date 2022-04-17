@@ -3,6 +3,7 @@ import { onEffectListAddEffectChange, onEffectListDropEffectClick } from './add-
 import { pristine } from './utils/validate.js';
 import { sendData } from './api.js';
 import { UPLOAD_URL } from './api.js';
+import { isEscEvent } from './util.js';
 
 const uploadInput = document.querySelector('.img-upload__input');
 const imgUploadForm = document.querySelector('.img-upload__form');
@@ -21,6 +22,8 @@ const onCloseUploadImageFormClick = () => {
   onZoomImageDropClick();
   onEffectListDropEffectClick();
   pristine.reset();
+
+  uploadImageCloseButton.removeEventListener('click', onCloseUploadImageFormClick);
 };
 
 const onUploadImageFormEscKeydown = (evt) => {
@@ -29,7 +32,9 @@ const onUploadImageFormEscKeydown = (evt) => {
 };
 
 const onEscKey = (evt) => {
-  evt.stopPropagation();
+  if (isEscEvent) {
+    evt.stopPropagation();
+  }
 };
 
 hashtagsInput.addEventListener('keydown', onEscKey);
@@ -46,6 +51,7 @@ function onOpenUploadImageFormChange() {
       document.querySelector('.scale__control--bigger').addEventListener('click', onZoomImageUpClick);
       document.addEventListener('keydown', onUploadImageFormEscKeydown);
       document.querySelector('.effects__list').addEventListener('change', onEffectListAddEffectChange);
+      uploadImageCloseButton.addEventListener('click', onCloseUploadImageFormClick);
     }, false);
 
     previewImg.readAsDataURL(this.files[0]);
@@ -53,8 +59,6 @@ function onOpenUploadImageFormChange() {
 }
 
 uploadInput.addEventListener('change', onOpenUploadImageFormChange);
-
-uploadImageCloseButton.addEventListener('click', onCloseUploadImageFormClick);
 
 const setUserFormSubmit = (onSuccess, onFail) => {
   const onSendDataSubmit = (evt) => {
