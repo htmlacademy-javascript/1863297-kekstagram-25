@@ -15,13 +15,6 @@ const deleteMessagePopup = () => {
   }
 };
 
-const onDocumentClick = (evt) => {
-  if (!evt.target.closest('.success__inner') && !evt.target.closest('.error__inner')) {
-    deleteMessagePopup();
-    document.removeEventListener('click', onDocumentClick);
-  }
-};
-
 const onDocumentKeydown = (evt) => {
   if (isEscEvent(evt)) {
     evt.preventDefault();
@@ -31,8 +24,18 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
+const onDocumentClick = (evt) => {
+  if (!evt.target.closest('.success__inner') && !evt.target.closest('.error__inner')) {
+    deleteMessagePopup();
+    document.removeEventListener('click', onDocumentClick);
+    document.removeEventListener('keydown', onDocumentKeydown);
+  }
+};
+
 const onMessagePopupButtonClick = () => {
   deleteMessagePopup();
+  document.removeEventListener('keydown', onDocumentKeydown);
+  document.removeEventListener('keydown', deleteMessagePopup);
 };
 
 const renderMessagePopup = (type) => {

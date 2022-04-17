@@ -2,7 +2,6 @@ import { onZoomImageUpClick, onZoomImageDownClick, onZoomImageDropClick } from '
 import { onEffectListAddEffectChange, onEffectListDropEffectClick } from './add-effect.js';
 import { pristine } from './utils/validate.js';
 import { sendData } from './api.js';
-import { UPLOAD_URL } from './api.js';
 import { isEscEvent } from './util.js';
 
 const uploadInput = document.querySelector('.img-upload__input');
@@ -22,7 +21,6 @@ const onCloseUploadImageFormClick = () => {
   onZoomImageDropClick();
   onEffectListDropEffectClick();
   pristine.reset();
-
   uploadImageCloseButton.removeEventListener('click', onCloseUploadImageFormClick);
 };
 
@@ -69,7 +67,6 @@ const setUserFormSubmit = (onSuccess, onFail) => {
         onSuccess,
         onFail,
         new FormData(evt.target),
-        UPLOAD_URL,
       );
     }
   };
