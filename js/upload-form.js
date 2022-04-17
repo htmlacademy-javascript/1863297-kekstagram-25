@@ -21,15 +21,15 @@ const onCloseUploadImageFormClick = () => {
   onZoomImageDropClick();
   onEffectListDropEffectClick();
   pristine.reset();
-
+  document.removeEventListener('keydown', onUploadImageFormEscKeydown);
   uploadImageCloseButton.removeEventListener('click', onCloseUploadImageFormClick);
 };
 
-const onUploadImageFormEscKeydown = (evt) => {
+function onUploadImageFormEscKeydown(evt) {
   evt.preventDefault();
   onCloseUploadImageFormClick();
   document.removeEventListener('keydown', onUploadImageFormEscKeydown);
-};
+}
 
 const onEscKey = (evt) => {
   if (isEscEvent) {
