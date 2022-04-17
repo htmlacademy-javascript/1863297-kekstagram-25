@@ -28,7 +28,6 @@ const onCloseUploadImageFormClick = () => {
 function onUploadImageFormEscKeydown(evt) {
   evt.preventDefault();
   onCloseUploadImageFormClick();
-  document.removeEventListener('keydown', onUploadImageFormEscKeydown);
 }
 
 const onEscKey = (evt) => {
