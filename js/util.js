@@ -21,12 +21,6 @@ const getRandomItems = (data, count) => {
 
 const isEscEvent = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
 
-const stopEscPropagation = ((evt) => {
-  if (isEscEvent(evt)) {
-    evt.stopPropagation();
-  }
-});
-
 const showAlert = (alertMessage) => {
   const alertElement = alertTemplate.cloneNode(true);
   const alertInner = alertElement.querySelector('.alert__inner');
@@ -55,6 +49,5 @@ export {
   isEscEvent,
   getRandomItems,
   sortByComments,
-  stopEscPropagation,
   debounce
 };
