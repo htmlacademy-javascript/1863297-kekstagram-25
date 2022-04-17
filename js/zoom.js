@@ -1,7 +1,7 @@
 const MIN_ZOOM_VALUE = 25;
 const MAX_ZOOM_VALUE = 100;
 const zoomInput = document.querySelector('.scale__control--value');
-let zoomValue = Number(zoomInput.value.slice(0, -1)); //отрежет проценты %
+let zoomValue = Number(zoomInput.value.slice(0, -1));
 const imagePreview = document.querySelector('.img-upload__preview');
 
 function onZoomImageUpClick(evt) {
