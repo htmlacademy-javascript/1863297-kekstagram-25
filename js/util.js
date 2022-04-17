@@ -43,11 +43,3 @@ function debounce(callback, timeoutDelay = TIMEOUT_DELAY) {
   };
 }
 
-export {
-  ALERT_MESSAGE,
-  showAlert,
-  isEscEvent,
-  getRandomItems,
-  sortByComments,
-  debounce
-};
